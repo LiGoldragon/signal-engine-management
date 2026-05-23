@@ -1,6 +1,6 @@
 use nota_codec::{Decoder, Encoder, NotaDecode, NotaEncode};
 use signal_persona_engine_management::{
-    ComponentKind, PeerSocket, Protocol, SocketMode, SpawnEnvelope, WirePath,
+    ComponentKind, EngineManagementProtocolVersion, PeerSocket, SocketMode, SpawnEnvelope, WirePath,
 };
 
 fn fixture_spawn_envelope() -> SpawnEnvelope {
@@ -23,7 +23,7 @@ fn fixture_spawn_envelope() -> SpawnEnvelope {
             domain_socket_path: WirePath::new("/var/run/persona/default/router.sock"),
         }],
         manager_socket: WirePath::new("/var/run/persona/default/persona.sock"),
-        protocol: Protocol::new(1),
+        engine_management_protocol_version: EngineManagementProtocolVersion::new(1),
     }
 }
 

@@ -87,9 +87,9 @@ pub struct ComponentStatus {
     Eq,
     Hash,
 )]
-pub struct Protocol(u16);
+pub struct EngineManagementProtocolVersion(u16);
 
-impl Protocol {
+impl EngineManagementProtocolVersion {
     pub const fn new(value: u16) -> Self {
         Self(value)
     }
@@ -98,6 +98,8 @@ impl Protocol {
         self.0
     }
 }
+
+pub type Protocol = EngineManagementProtocolVersion;
 
 #[derive(
     Archive, RkyvSerialize, RkyvDeserialize, NotaTransparent, Debug, Clone, PartialEq, Eq, Hash,
@@ -180,14 +182,14 @@ pub enum ComponentNotReadyReason {
 pub struct Presence {
     pub expected_component: ComponentName,
     pub expected_kind: ComponentKind,
-    pub protocol: Protocol,
+    pub engine_management_protocol_version: EngineManagementProtocolVersion,
 }
 
 #[derive(Archive, RkyvSerialize, RkyvDeserialize, NotaRecord, Debug, Clone, PartialEq, Eq)]
 pub struct ComponentIdentity {
     pub name: ComponentName,
     pub kind: ComponentKind,
-    pub protocol: Protocol,
+    pub engine_management_protocol_version: EngineManagementProtocolVersion,
     pub last_fatal_startup_error: Option<ComponentStartupError>,
 }
 
@@ -254,7 +256,7 @@ pub struct SpawnEnvelope {
     pub engine_management_socket_mode: SocketMode,
     pub peer_sockets: Vec<PeerSocket>,
     pub manager_socket: WirePath,
-    pub protocol: Protocol,
+    pub engine_management_protocol_version: EngineManagementProtocolVersion,
 }
 
 #[derive(Archive, RkyvSerialize, RkyvDeserialize, NotaEnum, Debug, Clone, PartialEq, Eq)]

@@ -5,9 +5,9 @@ use signal_frame::{
 };
 use signal_persona_engine_management::{
     ComponentHealth, ComponentHealthReport, ComponentIdentity, ComponentKind, ComponentName,
-    ComponentNotReady, ComponentNotReadyReason, ComponentReady, ComponentStartupError, Frame,
-    FrameBody, Operation, OperationKind, Presence, Protocol, Query, Reply, RequestUnimplemented,
-    StopAcknowledgement, TimestampNanos, UnimplementedReason,
+    ComponentNotReady, ComponentNotReadyReason, ComponentReady, ComponentStartupError,
+    EngineManagementProtocolVersion, Frame, FrameBody, Operation, OperationKind, Presence, Query,
+    Reply, RequestUnimplemented, StopAcknowledgement, TimestampNanos, UnimplementedReason,
 };
 
 fn exchange() -> ExchangeIdentifier {
@@ -65,7 +65,7 @@ fn operations_round_trip_through_length_prefixed_frames() {
     let announce = Operation::Announce(Presence {
         expected_component: router_name(),
         expected_kind: ComponentKind::Router,
-        protocol: Protocol::new(1),
+        engine_management_protocol_version: EngineManagementProtocolVersion::new(1),
     });
     assert_eq!(round_trip_operation(announce.clone()), announce);
 
@@ -87,7 +87,7 @@ fn replies_round_trip_through_length_prefixed_frames() {
         Reply::Identified(ComponentIdentity {
             name: router_name(),
             kind: ComponentKind::Router,
-            protocol: Protocol::new(1),
+            engine_management_protocol_version: EngineManagementProtocolVersion::new(1),
             last_fatal_startup_error: None,
         }),
         Reply::Ready(ComponentReady {
@@ -117,7 +117,7 @@ fn nota_text_shape_stays_canonical() {
     let operation = Operation::Announce(Presence {
         expected_component: router_name(),
         expected_kind: ComponentKind::Router,
-        protocol: Protocol::new(1),
+        engine_management_protocol_version: EngineManagementProtocolVersion::new(1),
     });
     let mut encoder = Encoder::new();
     operation.encode(&mut encoder).expect("encode");
@@ -130,7 +130,7 @@ fn nota_text_shape_stays_canonical() {
     let reply = Reply::Identified(ComponentIdentity {
         name: router_name(),
         kind: ComponentKind::Router,
-        protocol: Protocol::new(1),
+        engine_management_protocol_version: EngineManagementProtocolVersion::new(1),
         last_fatal_startup_error: Some(ComponentStartupError::StoreOpenFailed),
     });
     let mut encoder = Encoder::new();
@@ -152,7 +152,7 @@ fn operation_kind_is_generated_by_macro() {
             Operation::Announce(Presence {
                 expected_component: router_name(),
                 expected_kind: ComponentKind::Router,
-                protocol: Protocol::new(1),
+                engine_management_protocol_version: EngineManagementProtocolVersion::new(1),
             }),
             OperationKind::Announce,
         ),
