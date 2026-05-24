@@ -55,6 +55,13 @@
               cargoTestExtraArgs = "--test spawn_envelope";
             }
           );
+          test-durable-identity = craneLib.cargoTest (
+            commonArgs
+            // {
+              inherit cargoArtifacts;
+              cargoTestExtraArgs = "--test durable_identity";
+            }
+          );
           test-doc = craneLib.cargoTest (
             commonArgs
             // {

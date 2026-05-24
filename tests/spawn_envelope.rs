@@ -1,6 +1,7 @@
 use nota_codec::{Decoder, Encoder, NotaDecode, NotaEncode};
 use signal_engine_management::{
-    ComponentKind, EngineManagementProtocolVersion, PeerSocket, SocketMode, SpawnEnvelope, WirePath,
+    ComponentKind, EngineManagementProtocolVersion, ParentAuthority, PeerSocket, ProcessIdentifier,
+    SocketMode, SpawnEnvelope, WirePath,
 };
 
 fn fixture_spawn_envelope() -> SpawnEnvelope {
@@ -24,6 +25,11 @@ fn fixture_spawn_envelope() -> SpawnEnvelope {
         }],
         manager_socket: WirePath::new("/var/run/persona/default/persona.sock"),
         engine_management_protocol_version: EngineManagementProtocolVersion::new(1),
+        // DESIGN-DECISION-REVIEW (second-designer/172 §3.4)
+        parent_authority: ParentAuthority::new(
+            ProcessIdentifier::new(4242),
+            signal_persona_origin::UnixUserIdentifier::new(0),
+        ),
     }
 }
 
@@ -41,7 +47,7 @@ fn spawn_envelope_round_trips_through_nota_text() {
     assert_eq!(recovered, envelope);
     assert_eq!(
         text,
-        "(default Message Message (UnixUser 1001) [/var/lib/persona/default/message] [/var/run/persona/default/message.sock] 432 [/var/run/persona/default/message.engine_management.sock] 384 [(Router [/var/run/persona/default/router.sock])] [/var/run/persona/default/persona.sock] 1)"
+        "(default Message Message (UnixUser 1001) [/var/lib/persona/default/message] [/var/run/persona/default/message.sock] 432 [/var/run/persona/default/message.engine_management.sock] 384 [(Router [/var/run/persona/default/router.sock])] [/var/run/persona/default/persona.sock] 1 (4242 0))"
     );
 }
 

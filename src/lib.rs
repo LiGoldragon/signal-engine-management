@@ -14,6 +14,14 @@ pub use signal_frame::{
     Request as FrameRequest, SIGNAL_FRAME_PROTOCOL_VERSION,
 };
 
+pub mod identity;
+
+pub use identity::{
+    DurableIdentity, IdentityError, ParentAuthority, PeerCredentials, PeerCredentialsSource,
+    ProcessIdentifier, UnixGroupIdentifier, verify_peer_credentials_against_envelope,
+    verify_spawn_envelope_origin,
+};
+
 #[derive(
     Archive,
     RkyvSerialize,
@@ -257,6 +265,13 @@ pub struct SpawnEnvelope {
     pub peer_sockets: Vec<PeerSocket>,
     pub manager_socket: WirePath,
     pub engine_management_protocol_version: EngineManagementProtocolVersion,
+    // DESIGN-DECISION-REVIEW (second-designer/172 §3.4)
+    /// The supervising process's verifiable identity. The child caches this
+    /// from the envelope and consults it on every supervisor connection;
+    /// `SO_PEERCRED` on an accepted stream from the supervisor MUST report
+    /// matching kernel process identifier and Unix user identifier. See
+    /// [`identity::verify_spawn_envelope_origin`].
+    pub parent_authority: identity::ParentAuthority,
 }
 
 #[derive(Archive, RkyvSerialize, RkyvDeserialize, NotaEnum, Debug, Clone, PartialEq, Eq)]

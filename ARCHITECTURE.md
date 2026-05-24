@@ -24,11 +24,38 @@ domain command bus.
 `SpawnEnvelope` is the typed launch record the Persona manager gives to a
 child process. It names the engine identity, component kind, component
 principal, owner identity, state directory, ordinary domain socket, engine
-management socket, peer sockets, manager socket, and engine-management
-protocol.
+management socket, peer sockets, manager socket, engine-management
+protocol, and the supervising process's verifiable parent authority.
 
 Domain sockets speak the component's ordinary `signal-persona-*` contract.
 Engine-management sockets speak this crate's `Operation` / `Reply`.
+
+## Stable Durable Identity (`identity` module)
+
+The `parent_authority: ParentAuthority` field on `SpawnEnvelope` carries
+the supervisor's kernel process identifier and Unix user identifier as
+declared at spawn time. The child caches the envelope and, on every
+supervisor connection, reads `SO_PEERCRED` from the accepted Unix stream
+via a `PeerCredentialsSource` implementation and calls
+`verify_spawn_envelope_origin(source, &stream, &envelope)`.
+
+That function returns a `DurableIdentity { engine_identifier,
+peer_credentials }` only when the kernel-reported peer credentials match
+the envelope's parent authority. The result is the binding the psyche
+asked for:
+
+- *Stable*: `engine_identifier` survives restarts of either side.
+- *Durable*: every connection re-anchors against credentials the kernel
+  grants, not against a token the connecting peer chose.
+
+The contract crate forbids unsafe code and stays I/O-strategy agnostic:
+the `PeerCredentialsSource` trait abstracts the `SO_PEERCRED` read so
+supervised daemons can choose `rustix`, `nix`, or a future stabilised
+`UnixStream::peer_cred()` without touching the contract surface.
+Mismatches surface as `IdentityError::ProcessIdentifierMismatch`,
+`IdentityError::UnixUserIdentifierMismatch`, or
+`IdentityError::PeerCredentialsReadFailed`; the caller MUST close the
+connection on any of them — the peer is not the supervisor.
 
 ## Skeleton Honesty
 
