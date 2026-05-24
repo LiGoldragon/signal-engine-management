@@ -1,5 +1,5 @@
 {
-  description = "Persona engine-management lifecycle signal contract.";
+  description = "Engine-management lifecycle signal contract.";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -80,7 +80,7 @@
         };
 
         devShells.default = pkgs.mkShell {
-          name = "signal-persona-engine-management";
+          name = "signal-engine-management";
           packages = [
             pkgs.jujutsu
             pkgs.pkg-config

@@ -252,6 +252,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b39cdef0fa800fc44525c84ccb54a029961a8215f9619753635a9c0d2538d46d"
 
 [[package]]
+name = "signal-engine-management"
+version = "0.1.0"
+dependencies = [
+ "nota-codec",
+ "rkyv",
+ "signal-frame",
+ "signal-persona-origin",
+]
+
+[[package]]
 name = "signal-frame"
 version = "0.1.0"
 source = "git+https://github.com/LiGoldragon/signal-frame.git?branch=main#653773b7d4c18d16efd977ada4d280876debefd7"
@@ -270,16 +280,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
-]
-
-[[package]]
-name = "signal-persona-engine-management"
-version = "0.1.0"
-dependencies = [
- "nota-codec",
- "rkyv",
- "signal-frame",
- "signal-persona-origin",
 ]
 
 [[package]]

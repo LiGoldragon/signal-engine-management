@@ -1,5 +1,5 @@
 use nota_codec::{Decoder, Encoder, NotaDecode, NotaEncode};
-use signal_persona_engine_management::{
+use signal_engine_management::{
     ComponentKind, EngineManagementProtocolVersion, PeerSocket, SocketMode, SpawnEnvelope, WirePath,
 };
 

@@ -1,4 +1,4 @@
-# skills — signal-persona-engine-management
+# skills — signal-engine-management
 
 Per-repo guide for the ordinary Persona engine-management lifecycle contract.
 

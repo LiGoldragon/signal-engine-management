@@ -1,13 +1,13 @@
 use nota_codec::{Decoder, Encoder, NotaDecode, NotaEncode};
-use signal_frame::{
-    ExchangeIdentifier, ExchangeLane, LaneSequence, NonEmpty, Reply as FrameReply, RequestPayload,
-    SessionEpoch, SubReply,
-};
-use signal_persona_engine_management::{
+use signal_engine_management::{
     ComponentHealth, ComponentHealthReport, ComponentIdentity, ComponentKind, ComponentName,
     ComponentNotReady, ComponentNotReadyReason, ComponentReady, ComponentStartupError,
     EngineManagementProtocolVersion, Frame, FrameBody, Operation, OperationKind, Presence, Query,
     Reply, RequestUnimplemented, StopAcknowledgement, TimestampNanos, UnimplementedReason,
+};
+use signal_frame::{
+    ExchangeIdentifier, ExchangeLane, LaneSequence, NonEmpty, Reply as FrameReply, RequestPayload,
+    SessionEpoch, SubReply,
 };
 
 fn exchange() -> ExchangeIdentifier {

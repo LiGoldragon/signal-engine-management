@@ -1,4 +1,4 @@
-# signal-persona-engine-management
+# signal-engine-management
 
 Ordinary Signal contract for Persona engine-management lifecycle traffic.
 

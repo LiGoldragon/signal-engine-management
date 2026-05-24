@@ -1,6 +1,6 @@
-# signal-persona-engine-management — Architecture
+# signal-engine-management — Architecture
 
-`signal-persona-engine-management` is the ordinary Signal contract for
+`signal-engine-management` is the ordinary Signal contract for
 Persona manager-to-supervised-component lifecycle traffic.
 
 ## Boundary

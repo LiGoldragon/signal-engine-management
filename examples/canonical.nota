@@ -1,4 +1,4 @@
-;; Canonical NOTA examples for signal-persona-engine-management.
+;; Canonical NOTA examples for signal-engine-management.
 
 (Announce (persona-router Router 1))
 (Query (ReadinessStatus persona-router))

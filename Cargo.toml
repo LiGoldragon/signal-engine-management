@@ -1,15 +1,15 @@
 [package]
-name         = "signal-persona-engine-management"
+name         = "signal-engine-management"
 version      = "0.1.0"
 edition      = "2024"
 rust-version = "1.85"
 license      = "MIT OR Apache-2.0"
-repository   = "https://github.com/LiGoldragon/signal-persona-engine-management"
-description  = "Persona engine-management lifecycle signal contract."
+repository   = "https://github.com/LiGoldragon/signal-engine-management"
+description  = "Engine-management lifecycle signal contract."
 publish      = false
 
 [lib]
-name = "signal_persona_engine_management"
+name = "signal_engine_management"
 path = "src/lib.rs"
 
 [dependencies]
